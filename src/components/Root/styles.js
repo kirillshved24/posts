@@ -1,3 +1,4 @@
+
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,12 +10,11 @@ display: flex;
     margin: 0 auto;
     flex-wrap:wrap;
 `
+
 export const MenuItem = styled(NavLink)`
 font-size:16px;
-cursor:pointer;
 text-decoration:none;
 color:black;
-
 
 &.active{
 color:red;
