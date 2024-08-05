@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import * as SC from "./styles";
 import { Container } from '../Container'
+    ;
 export const Root = () => <>
     <Container>
         <SC.Menu>

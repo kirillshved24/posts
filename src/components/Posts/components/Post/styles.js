@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+
 import styled from "styled-components";
 export const Post = styled.div`
 display:flex;
@@ -15,16 +15,4 @@ max-width:200px;
 export const Title = styled.div`
 font-size:24px;
 font-weight:bold;
-
-`
-
-export const DetailLink = styled(Link)`
-color:black;
-text-decoration:none;
-
-&:hover{
-color:red;
-text-decoration:underline;
-}
-
 `
