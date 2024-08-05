@@ -1,2 +1,2 @@
 import React from "react";
-export const AddPost = () => <>Это страничка добавления поста</>
+export const AddPostPage = () => <>Это страничка добавления поста</>
