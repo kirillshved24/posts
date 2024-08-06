@@ -1,32 +1,37 @@
-import React from "react";
+
 import { Posts } from "../../components/Posts";
 import { Container } from "../../components/Container";
 import { Typo } from "../../components/Typo";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getFreshPost } from "../../redux/slices/postsSlice";
 
-const INITIAL_POSTS = [
-    {
-        id: 1,
-        title: 'Post 1',
-        image: 'https://bronk.club/uploads/posts/2024-01/1705932163_bronk-club-p-smeshnaya-sova-vkontakte-4.jpg'
-    },
 
-    {
-        id: 2,
-        title: 'Post 2',
-        image: 'https://bronk.club/uploads/posts/2024-01/1705932163_bronk-club-p-smeshnaya-sova-vkontakte-4.jpg'
-    },
-    {
-        id: 3,
-        title: 'Post 3',
-        image: 'https://bronk.club/uploads/posts/2024-01/1705932163_bronk-club-p-smeshnaya-sova-vkontakte-4.jpg'
-    },
-]
+export const MainPage = () => {
+    const dispatch = useDispatch()
 
-export const MainPage = () => (
-    <>
+    const postForViea = useSelector((state) => state.posts.postForViea)
+    const freshPosts = useSelector((state) => state.posts.freshPosts)
+
+
+    useEffect(() => {
+        dispatch(getFreshPost())
+    }, [])
+
+    return <>
         <Container>
-            <Typo>Свежие публикации</Typo>
-            <Posts posts={INITIAL_POSTS} />
+            {freshPosts &&
+                <>
+                    <Typo>Свежие публикации</Typo>
+                    <Posts posts={freshPosts} />
+                </>
+            }
+            {postForViea &&
+                <>
+                    <Typo>Последний просмотренный пост</Typo>
+                    <Posts posts={[postForViea]} />
+                </>
+            }
         </Container>
     </>
-)
+}
