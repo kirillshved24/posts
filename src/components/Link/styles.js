@@ -1,7 +1,10 @@
-import styled, { css } from "styled-components";
-import { Link, NavLink } from "react-router-dom";
+import styled from "styled-components";
+import { Link, } from "react-router-dom";
 
-const LinkStyle = css`
+
+
+
+export const SimpleLink = styled(Link)`
 color:black;
 text-decoration:none;
 
@@ -10,8 +13,3 @@ color:red;
 text-decoration:underline;
 }
 `
-
-export const SimpleLink = styled(Link)`${LinkStyle}`
-
-
-export const NavigationLink = styled(NavLink)`${LinkStyle}`
