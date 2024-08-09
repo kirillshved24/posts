@@ -1,37 +1,37 @@
-
 import { Posts } from "../../components/Posts";
 import { Container } from "../../components/Container";
 import { Typo } from "../../components/Typo";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getFreshPost } from "../../redux/slices/postsSlice";
-
+import { getFreshPosts } from "../../redux/slices/postsSlice";
 
 export const MainPage = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    const postForViea = useSelector((state) => state.posts.postForViea)
-    const freshPosts = useSelector((state) => state.posts.freshPosts)
+    // Исправляем переменные для соответствия состоянию в Redux
+    const postForView = useSelector((state) => state.posts.postForView.post);
+    const { posts, loading } = useSelector((state) => state.posts.freshPosts);
 
 
     useEffect(() => {
-        dispatch(getFreshPost())
-    }, [])
+        dispatch(getFreshPosts());
+    }, [dispatch]);
 
-    return <>
+    return (
         <Container>
-            {freshPosts &&
+            {loading && <>Loading...</>}
+            {posts &&
                 <>
                     <Typo>Свежие публикации</Typo>
-                    <Posts posts={freshPosts} />
+                    <Posts posts={posts} />
                 </>
             }
-            {postForViea &&
+            {postForView && (
                 <>
                     <Typo>Последний просмотренный пост</Typo>
-                    <Posts posts={[postForViea]} />
+                    <Posts posts={[postForView]} />
                 </>
-            }
+            )}
         </Container>
-    </>
-}
+    );
+};

@@ -1,70 +1,98 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { postAPI } from '../../api/postsApi';
 
 const initialState = {
-    list: [
+    posts: {
+        list: null,
+        loading: false
+    },
+    postForView: {
+        post: null,
+        loading: false
+    },
+    freshPosts: {
+        posts: null,
+        loading: false
+    }
+};
 
-        {
-            id: 5,
-            title: 'Post 5',
-            image: 'https://bronk.club/uploads/posts/2024-01/1705932163_bronk-club-p-smeshnaya-sova-vkontakte-4.jpg',
-            text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum assumenda, tenetur nam porro facilis eveniet sed nisi quo earum, voluptas voluptatum ullam exercitationem odio deleniti similique fugiat! Aperiam, ipsam ab.'
-        },
-        {
-            id: 4,
-            title: 'Post 4',
-            image: 'https://bronk.club/uploads/posts/2024-01/1705932163_bronk-club-p-smeshnaya-sova-vkontakte-4.jpg',
-            text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum assumenda, tenetur nam porro facilis eveniet sed nisi quo earum, voluptas voluptatum ullam exercitationem odio deleniti similique fugiat! Aperiam, ipsam ab.'
-        },
-        {
-            id: 3,
-            title: 'Post 3',
-            image: 'https://bronk.club/uploads/posts/2024-01/1705932163_bronk-club-p-smeshnaya-sova-vkontakte-4.jpg',
-            text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum assumenda, tenetur nam porro facilis eveniet sed nisi quo earum, voluptas voluptatum ullam exercitationem odio deleniti similique fugiat! Aperiam, ipsam ab.'
-        },
-        {
-            id: 2,
-            title: 'Post 2',
-            image: 'https://bronk.club/uploads/posts/2024-01/1705932163_bronk-club-p-smeshnaya-sova-vkontakte-4.jpg',
-            text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum assumenda, tenetur nam porro facilis eveniet sed nisi quo earum, voluptas voluptatum ullam exercitationem odio deleniti similique fugiat! Aperiam, ipsam ab.'
-        },
-        {
-            id: 1,
-            title: 'Post 1',
-            image: 'https://bronk.club/uploads/posts/2024-01/1705932163_bronk-club-p-smeshnaya-sova-vkontakte-4.jpg',
-            text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nostrum assumenda, tenetur nam porro facilis eveniet sed nisi quo earum, voluptas voluptatum ullam exercitationem odio deleniti similique fugiat! Aperiam, ipsam ab.'
-        },
+export const getPostById = createAsyncThunk(
+    'posts/fetchById',
+    async (postid) => {
+        return await postAPI.fetchById(postid);
+    }
+);
 
-    ],
-    postForViea: null,
-    freshPosts: null
+export const getPosts = createAsyncThunk(
+    'posts/fetchPosts',
+    async () => {
+        return await postAPI.fetchPosts();
+    }
+);
 
-}
+export const getFreshPosts = createAsyncThunk(
+    'posts/fetchFreshPosts',
+    async (limit) => {
+        return await postAPI.fetchFreshPosts(limit);
+    }
+);
 
 export const postsSlice = createSlice({
     name: 'posts',
     initialState,
     reducers: {
-        setPosts: (state, action) => {
-            state.list = action.payload
-        },
         editPost: (state, action) => {
-
+            // Logic for editing post
         },
-        getPost: (state, action) => {
-            state.postForViea = state.list.find((item) => item.id === action.payload)
-        },
-
-        getFreshPost: (state) => {
-            state.freshPosts = state.list.slice(0, 3)
-        },
-
         addPost: (state, action) => {
-
+            // Logic for adding post
         },
     },
-})
+    extraReducers: (builder) => {
+        builder.addCase(getPostById.pending, (state) => {
+            state.postForView = {
+                post: null,
+                loading: true
+            };
+        });
 
+        builder.addCase(getPostById.fulfilled, (state, action) => {
+            state.postForView = {
+                post: action.payload,
+                loading: false
+            };
+        });
 
-export const { setPosts, editPost, getPost, addPost, getFreshPost } = postsSlice.actions
+        builder.addCase(getPosts.pending, (state) => {
+            state.posts = {
+                list: null,
+                loading: true
+            };
+        });
 
-export default postsSlice.reducer
+        builder.addCase(getPosts.fulfilled, (state, action) => {
+            state.posts = {
+                list: action.payload,
+                loading: false
+            };
+        });
+
+        builder.addCase(getFreshPosts.pending, (state) => {
+            state.freshPosts = {
+                posts: null,
+                loading: true
+            };
+        });
+
+        builder.addCase(getFreshPosts.fulfilled, (state, action) => {
+            state.freshPosts = {
+                posts: action.payload,
+                loading: false
+            };
+        });
+    }
+});
+
+export const { setPosts, editPost, addPost } = postsSlice.actions;
+
+export default postsSlice.reducer;

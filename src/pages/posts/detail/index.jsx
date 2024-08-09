@@ -5,25 +5,31 @@ import { Typo } from "../../../components/Typo";
 import { Container } from "../../../components/Container";
 import * as SC from './styles'
 import { Link } from "../../../components/Link";
-import { getPost } from "../../../redux/slices/postsSlice";
+import { getPostById } from '../../../redux/slices/postsSlice'
 export const DetailPostPage = () => {
     const { id } = useParams()
-    const postForViea = useSelector((state) => state.posts.postForViea)
+    const postForView = useSelector((state) => state.posts.postForView)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getPost(Number(id)))
+        dispatch(getPostById(Number(id)))
     }, [id])
 
-    if (!postForViea) {
+    if (postForView.loading) {
+        return <Container>Loading...</Container>
+    }
+
+    if (!postForView.post || !postForView.post.hasOwnProperty('id')) {
         return <>Пост не найден</>
     }
+
+    const { post } = postForView
+
+    const image = post.image || 'https://www.ptichka.ru/data/cache/2018nov/05/46/79609_73338.jpg'
     return <Container>
-        <Typo>
-            {postForViea.title}
-        </Typo>
-        <SC.Image src={postForViea.image} alt={postForViea.title} />
-        <SC.Text>{postForViea.text}</SC.Text>
+        <Typo> {post.title}</Typo>
+        <SC.Image src={image} alt={post.title} />
+        <SC.Text>{post.body}</SC.Text>
         <div style={{ clear: 'both' }} />
         <SC.LinkWrapper>
             <Link to='/posts/'>Обратно к публикациям</Link>
