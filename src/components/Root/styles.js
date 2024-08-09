@@ -6,9 +6,9 @@ export const Menu = styled.div`
 display: flex;
     gap: 15px;
     justify-content: space-between;
-    max-width: 500px;
+    max-width: 580px;
     margin: 0 auto;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 `
 
 export const MenuItem = styled(NavLink)`

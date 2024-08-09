@@ -10,9 +10,6 @@ export const PostsPage = () => {
     const { list, loading } = useSelector((state) => state.posts.posts)
     const dispatch = useDispatch()
 
-    console.log(list)
-
-    console.log(loading)
 
     useEffect(() => {
         dispatch(getPosts())

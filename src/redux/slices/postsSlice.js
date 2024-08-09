@@ -42,10 +42,12 @@ export const postsSlice = createSlice({
     initialState,
     reducers: {
         editPost: (state, action) => {
-            // Logic for editing post
+
         },
         addPost: (state, action) => {
-            // Logic for adding post
+            const newPost = { ...action.payload }
+            newPost.id = new Date().getTime()
+            state.posts.list = state.posts.list ? [action.payload, [...state.posts.list]] : [action.payload]
         },
     },
     extraReducers: (builder) => {
@@ -93,6 +95,6 @@ export const postsSlice = createSlice({
     }
 });
 
-export const { setPosts, editPost, addPost } = postsSlice.actions;
+export const { editPost, addPost } = postsSlice.actions;
 
 export default postsSlice.reducer;
