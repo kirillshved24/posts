@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import { Container } from "../../../../components/Container";
 import * as SC from './styles'
 import { Typo } from '../../../../components/Typo/index'
-import { useDispatch } from 'react-redux'
-import { addPost } from "../../../../redux/slices/postsSlice";
+
 
 const DEFAULT_VALUES = { title: '', body: '' }
 
-export const PostForm = () => {
+export const PostForm = ({ title, onSubmitForm, defaultValues }) => {
 
-    const dispatch = useDispatch()
-
-    const [formValues, setFormValues] = useState(DEFAULT_VALUES)
+    const [formValues, setFormValues] = useState(defaultValues || DEFAULT_VALUES)
 
     const onChage = (name, value) => {
         setFormValues({ ...formValues, [name]: value })
@@ -19,7 +16,7 @@ export const PostForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        dispatch(addPost(formValues))
+        onSubmitForm(formValues)
         setFormValues(DEFAULT_VALUES)
 
     }
@@ -28,14 +25,14 @@ export const PostForm = () => {
 
     return (
         <Container>
-            <Typo>Добавление нового поста</Typo>
+            <Typo>{title}</Typo>
             <SC.Form onSubmit={onSubmit}>
                 <SC.Field>
                     <SC.Input
                         type='text'
                         name='title'
                         value={formValues.title}
-                        placeholder='Заголовок поста'
+                        placeholder='Заголовок'
                         onChange={(e) => onChage(e.target.name, e.target.value)}
                     />
                 </SC.Field>
