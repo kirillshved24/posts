@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { Container } from "../../components/Container";
+import { Container } from "../../components/ui/Container";
 import { Posts } from "../../components/Posts";
 import { useDispatch, useSelector } from 'react-redux'
-import { Typo } from "../../components/Typo";
+import { Typo } from "../../components/ui/Typo";
 import { getPosts } from "../../redux/slices/postsSlice";
 
 
