@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Container } from "../../../../components/Container";
+import { Container } from "../../../../components/ui/Container";
 import * as SC from './styles'
-import { Typo } from '../../../../components/Typo/index'
+import { Typo } from '../../../../components/ui/Typo/index'
+import { Form } from "../../../../components/ui/Form";
+import { Field } from "../../../../components/ui/Field";
+import { Input } from "../../../../components/ui/Input";
 
 
 const DEFAULT_VALUES = { title: '', body: '' }
@@ -17,7 +20,7 @@ export const PostForm = ({ title, onSubmitForm, defaultValues }) => {
     const onSubmit = (e) => {
         e.preventDefault()
         onSubmitForm(formValues)
-        setFormValues(DEFAULT_VALUES)
+        !defaultValues && setFormValues(DEFAULT_VALUES)
 
     }
 
@@ -26,17 +29,17 @@ export const PostForm = ({ title, onSubmitForm, defaultValues }) => {
     return (
         <Container>
             <Typo>{title}</Typo>
-            <SC.Form onSubmit={onSubmit}>
-                <SC.Field>
-                    <SC.Input
+            <Form onSubmit={onSubmit}>
+                <Field>
+                    <Input
                         type='text'
                         name='title'
                         value={formValues.title}
                         placeholder='Заголовок'
                         onChange={(e) => onChage(e.target.name, e.target.value)}
                     />
-                </SC.Field>
-                <SC.Field>
+                </Field>
+                <Field>
                     <SC.Textarea
                         name='body'
                         placeholder='Текст'
@@ -44,9 +47,9 @@ export const PostForm = ({ title, onSubmitForm, defaultValues }) => {
                         rows={10} cols={30}
                         onChange={(e) => onChage(e.target.name, e.target.value)}
                     />
-                </SC.Field>
+                </Field>
                 <SC.Button type="submit" disabled={disabled}>Сохранить</SC.Button>
-            </SC.Form>
+            </Form>
         </Container>
     )
 }

@@ -1,6 +1,6 @@
 import { Posts } from "../../components/Posts";
-import { Container } from "../../components/Container";
-import { Typo } from "../../components/Typo";
+import { Container } from "../../components/ui/Container";
+import { Typo } from "../../components/ui/Typo";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getFreshPosts } from "../../redux/slices/postsSlice";
@@ -8,7 +8,6 @@ import { getFreshPosts } from "../../redux/slices/postsSlice";
 export const MainPage = () => {
     const dispatch = useDispatch();
 
-    // Исправляем переменные для соответствия состоянию в Redux
     const postForView = useSelector((state) => state.posts.postForView.post);
     const { posts, loading } = useSelector((state) => state.posts.freshPosts);
 
