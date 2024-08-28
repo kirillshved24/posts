@@ -1,7 +1,7 @@
 import React from "react";
 import * as SC from './styles'
 import { Link } from "../../../ui/Link";
-export const Post = ({ post }) => {
+export const Post = React.memo(({ post }) => {
     const image = post.image || 'https://www.ptichka.ru/data/cache/2018nov/05/46/79609_73338.jpg'
     return (
         <SC.Post>
@@ -10,4 +10,4 @@ export const Post = ({ post }) => {
             <Link to={`/posts/${post.id}`}>Читать далее...</Link>
         </SC.Post>
     )
-}
+})

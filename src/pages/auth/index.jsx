@@ -7,6 +7,7 @@ import { Input } from "../../components/ui/Input";
 import { Field } from "../../components/ui/Field";
 import { useDispatch } from 'react-redux'
 import { login } from "../../redux/slices/authSlice";
+import { Button } from "../../components/ui/Button";
 export const AuthPage = () => {
 
     const [formValues, setFormValues] = useState({ email: '', password: '' })
@@ -69,7 +70,7 @@ export const AuthPage = () => {
                     autoComplete='off'
                 />
             </Field>
-            <button type='submit' disabled={disabled}>Авторизация</button>
+            <Button type='submit' disabled={disabled}>Авторизация</Button>
         </Form>
     </Container>
 }
