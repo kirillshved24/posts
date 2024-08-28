@@ -1,12 +1,17 @@
 import React from "react";
 import { PostForm } from "../components/PostForm";
-import { addPost } from "../../../redux/slices/postsSlice";
+import { addPost, getPosts } from "../../../redux/slices/postsSlice";
 import { useDispatch } from "react-redux";
+
 export const AddPostPage = () => {
     const dispatch = useDispatch();
-    const onSubmitForm = (formValues) => {
-        dispatch(addPost(formValues));
+
+    const onSubmitForm = async (formValues) => {
+        console.log('Отправка формы для добавления поста:', formValues); // Лог
+        await dispatch(addPost(formValues)); // Убедитесь, что addPost возвращает промис
+        console.log('Пост добавлен'); // Лог
+        dispatch(getPosts({ page: 1, limit: 10 })); // Обновляем список постов после добавления
     };
+
     return <PostForm title='Добавление нового поста' onSubmitForm={onSubmitForm} />;
 };
-
