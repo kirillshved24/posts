@@ -14,10 +14,10 @@ export const EditPostPage = () => {
     const findedPost = useSelector(state => selectPostById(state, Number(id)));
 
     const onSubmitForm = async (formValues) => {
-        console.log('Отправка формы для редактирования поста:', formValues); // Лог
-        await dispatch(editPost(formValues)); // Убедитесь, что editPost возвращает промис
-        console.log('Пост отредактирован'); // Лог
-        dispatch(getPosts({ page: 1, limit: 10 })); // Обновляем список постов после редактирования
+        console.log('Отправка формы для редактирования поста:', formValues);
+        await dispatch(editPost(formValues));
+        console.log('Пост отредактирован');
+        dispatch(getPosts({ page: 1, limit: 10 }));
     };
 
     if (!findedPost) {

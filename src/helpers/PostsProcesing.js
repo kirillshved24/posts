@@ -17,13 +17,13 @@ export const Pagination = ({ totalPosts, limit, currentPage, onPageChange }) => 
     const totalPages = Math.ceil(totalPosts / limit);
 
     const handlePageChange = (page) => {
-        console.log(`Переключение на страницу: ${page}`); // Лог
+        console.log(`Переключение на страницу: ${page}`);
         if (page !== currentPage) {
             onPageChange(page);
         }
     };
 
-    console.log(`Построение пагинации: текущая страница ${currentPage}, всего страниц ${totalPages}`); // Лог
+    console.log(`Построение пагинации: текущая страница ${currentPage}, всего страниц ${totalPages}`);
 
     return (
         <SC.PaginationContainer>

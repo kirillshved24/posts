@@ -17,6 +17,7 @@ import { RegistrationPage } from './pages/registration';
 import { store } from './redux/store';
 import { Provider } from 'react-redux';
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
         path: 'registration',
         element: <RegistrationPage />
       },
+
     ]
   }
 ])
