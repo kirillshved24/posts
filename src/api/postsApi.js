@@ -1,7 +1,15 @@
 export const postAPI = {
     fetchPosts(page = 1, limit = 10) {
         console.log(`Запрос списка постов с параметрами: страница = ${page}, лимит = ${limit}`);
-        return fetch(`https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}&_sort=id&_order=desc`)
+
+        const params = new URLSearchParams({
+            _page: page,
+            _limit: limit,
+            _sort: 'id',
+            _order: 'desc'
+        });
+
+        return fetch(`https://jsonplaceholder.typicode.com/posts?${params.toString()}`)
             .then(response => {
                 console.log('Ответ от сервера:', response);
                 return response.json().then(posts => {
@@ -18,7 +26,14 @@ export const postAPI = {
 
     fetchFreshPosts(limit = 3) {
         console.log(`Запрос свежих постов с лимитом = ${limit}`);
-        return fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_sort=id&_order=desc`)
+
+        const params = new URLSearchParams({
+            _limit: limit,
+            _sort: 'id',
+            _order: 'desc'
+        });
+
+        return fetch(`https://jsonplaceholder.typicode.com/posts?${params.toString()}`)
             .then(response => {
                 console.log('Ответ от сервера (свежие посты):', response);
                 return response.json().then(posts => {
@@ -30,6 +45,7 @@ export const postAPI = {
 
     fetchById(id) {
         console.log(`Запрос поста по ID = ${id}`);
+
         return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
             .then(response => {
                 console.log('Ответ от сервера (пост по ID):', response);

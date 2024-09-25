@@ -28,7 +28,7 @@ export const DetailPostPage = () => {
             try {
                 await dispatch(deletePost(postForDelete.id));
                 console.log('Пост успешно удален:', postForDelete.id);
-                await dispatch(getPosts({ page: currentPage, limit: 10 }));
+                await dispatch(getPosts({ page: currentPage, limit: 10 })); // Обновление с текущей страницы
                 console.log('Список постов обновлен после удаления.');
                 navigate('/posts');
             } catch (error) {

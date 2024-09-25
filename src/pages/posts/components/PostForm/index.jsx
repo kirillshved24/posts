@@ -13,7 +13,7 @@ const DEFAULT_VALUES = { title: '', body: '' }
 export const PostForm = ({ title, onSubmitForm, defaultValues }) => {
     const [formValues, setFormValues] = useState(defaultValues || DEFAULT_VALUES);
 
-    console.log('PostForm Values:', formValues); // Логируем значения формы
+    console.log('PostForm Values:', formValues);
 
     const onChage = (name, value) => {
         setFormValues({ ...formValues, [name]: value });

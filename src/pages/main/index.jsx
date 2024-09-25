@@ -10,13 +10,17 @@ export const MainPage = () => {
     const dispatch = useDispatch();
 
 
-    const { loading } = useSelector((state) => state.posts);
+    const { loading, isLoaded } = useSelector((state) => state.posts);
     const freshPosts = useSelector((state) => state.posts.freshPosts.posts);
     const postForView = useSelector((state) => state.posts.postForView.post);
 
+
+
     useEffect(() => {
-        dispatch(getFreshPosts());
-    }, [dispatch]);
+        if (!isLoaded) {
+            dispatch(getFreshPosts());
+        }
+    }, [dispatch, isLoaded]);
 
     if (loading) {
         return <Container><Loading /></Container>;

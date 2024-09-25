@@ -7,10 +7,10 @@ export const AddPostPage = () => {
     const dispatch = useDispatch();
 
     const onSubmitForm = async (formValues) => {
-        console.log('Отправка формы для добавления поста:', formValues); // Лог
-        await dispatch(addPost(formValues)); // Убедитесь, что addPost возвращает промис
-        console.log('Пост добавлен'); // Лог
-        dispatch(getPosts({ page: 1, limit: 10 })); // Обновляем список постов после добавления
+        console.log('Отправка формы для добавления поста:', formValues);
+        await dispatch(addPost(formValues));
+        console.log('Пост добавлен');
+        dispatch(getPosts({ page: 1, limit: 10 }));
     };
 
     return <PostForm title='Добавление нового поста' onSubmitForm={onSubmitForm} />;

@@ -3,23 +3,30 @@ import { Container } from "../../components/ui/Container";
 import { Posts } from "../../components/Posts";
 import { useDispatch, useSelector } from 'react-redux';
 import { Typo } from "../../components/ui/Typo";
-import { getPosts, setSortType, setCurrentPage } from "../../redux/slices/postsSlice";
+import { getPosts, setSortType, setCurrentPage, getFreshPosts } from "../../redux/slices/postsSlice";
 import { Loading } from "../../components/ui/Loading";
 import { Pagination, sortPosts } from "../../helpers/PostsProcesing";
 
+
 export const PostsPage = () => {
     const dispatch = useDispatch();
-    const { list, loading, sortType, currentPage, totalPosts } = useSelector((state) => state.posts.posts);
+    const { list, loading, sortType, currentPage, totalPosts, isLoaded } = useSelector((state) => state.posts.posts);
 
     useEffect(() => {
-        dispatch(getPosts({ limit: 10 }));
-    }, [currentPage, dispatch]);
+        if (!isLoaded) {
+            dispatch(getFreshPosts());
+        }
+        console.log("Загрузка постов: текущая страница =", currentPage);
+        dispatch(getPosts({ page: currentPage, limit: 10 }));
+    }, [dispatch, currentPage, isLoaded]);;
 
     const handleSortChange = (e) => {
+        console.log("Изменение типа сортировки:", e.target.value);
         dispatch(setSortType(e.target.value));
     };
 
     const handlePageChange = (page) => {
+        console.log("Изменение страницы:", page);
         dispatch(setCurrentPage(page));
     };
 
