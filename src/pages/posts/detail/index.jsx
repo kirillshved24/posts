@@ -5,7 +5,7 @@ import { Typo } from "../../../components/ui/Typo";
 import { Container } from "../../../components/ui/Container";
 import * as SC from './styles';
 import { Link } from "../../../components/ui/Link";
-import { getPostById, showPost, deletePost, getPosts } from '../../../redux/slices/postsSlice';
+import { getPostById, showPost, deletePost, getFreshPosts } from '../../../redux/slices/postsSlice';
 import { Modal } from "../../../components/ui/Modal/styles";
 import { Button } from "../../../components/ui/Button";
 import { Loading } from "../../../components/ui/Loading";
@@ -15,9 +15,10 @@ export const DetailPostPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const { list, currentPage } = useSelector((state) => state.posts.posts);
+    const { list } = useSelector((state) => state.posts.posts);
     const postForView = useSelector((state) => state.posts.postForView);
     const { user } = useSelector((state) => state.auth);
+    const isLoaded = useSelector((state) => state.posts.posts.isLoaded);
 
     const [postForDelete, setPostForDelete] = useState(null);
     const showEditAndDeleteBtn = list && user;
@@ -28,15 +29,17 @@ export const DetailPostPage = () => {
             try {
                 await dispatch(deletePost(postForDelete.id));
                 console.log('Пост успешно удален:', postForDelete.id);
-                await dispatch(getPosts({ page: currentPage, limit: 10 })); // Обновление с текущей страницы
-                console.log('Список постов обновлен после удаления.');
+
+                // Обнуляем состояние поста для просмотра после удаления
+                dispatch(showPost(null));
+
+                // Перенаправление на список постов после удаления
                 navigate('/posts');
             } catch (error) {
                 console.error('Ошибка при удалении поста:', error);
             }
         }
     };
-
     useEffect(() => {
         const intId = Number(id);
         console.log('Преобразованный ID поста в число:', intId);
@@ -51,7 +54,10 @@ export const DetailPostPage = () => {
             dispatch(getPostById(intId));
             console.log('Пост не найден в списке, запрошен из API:', intId);
         }
-    }, [id, list, dispatch]);
+        if (!isLoaded) {
+            dispatch(getFreshPosts());
+        }
+    }, [id, list, dispatch, isLoaded]);
 
 
     if (postForView.loading) {
