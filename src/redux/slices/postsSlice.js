@@ -136,7 +136,15 @@ const postsSlice = createSlice({
             })
 
             .addCase(deletePost.fulfilled, (state, action) => {
-                state.posts.list = state.posts.list.filter(post => post.id !== action.payload);
+                const id = action.payload;
+
+                // Удаляем пост из списка
+                state.posts.list = state.posts.list.filter(post => post.id !== id);
+
+                // Обнуляем пост для просмотра
+                if (state.postForView.post?.id === id) {
+                    state.postForView = { post: null, loading: false };
+                }
             });
     }
 });

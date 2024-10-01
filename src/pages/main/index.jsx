@@ -9,10 +9,11 @@ import { Loading } from "../../components/ui/Loading";
 export const MainPage = () => {
     const dispatch = useDispatch();
 
-
-    const { loading, isLoaded } = useSelector((state) => state.posts);
+    const isLoaded = useSelector((state) => state.posts.posts.isLoaded);
+    const loading = useSelector((state) => state.posts.posts.loading);
     const freshPosts = useSelector((state) => state.posts.freshPosts.posts);
     const postForView = useSelector((state) => state.posts.postForView.post);
+
 
 
 
@@ -25,7 +26,8 @@ export const MainPage = () => {
     if (loading) {
         return <Container><Loading /></Container>;
     }
-
+    console.log("isLoaded:", isLoaded);
+    console.log("loading:", loading);
     return (
         <Container>
 
